@@ -1,0 +1,118 @@
+ install.packages(c('neuralnet','keras','tensorflow'), dependencies = TRUE)
+ install.packages("tidyverse")
+
+library(neuralnet)
+library(tidyverse)
+
+# Prepare the iris dataset
+iris <- iris %>% mutate(across(where(is.character), as.factor))
+print(sample_n(iris, 3))
+
+summary(iris)
+
+# Train and test split
+set.seed(254)
+data_rows <- floor(0.80 * nrow(iris))
+train_indices <- sample(seq_len(nrow(iris)), data_rows)
+train_data <- iris[train_indices, ]
+test_data <- iris[-train_indices, ]
+
+# Train the neural network model(4,2)
+model <- neuralnet(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width,data = train_data, hidden = c(4, 2), linear.output = FALSE)
+
+plot(model, rep = 'best')
+
+# Model evaluation
+# Predict categories - test dataset
+pred <- predict(model, test_data[, -5])
+labels <- c("setosa", "versicolor", "virginica")
+
+# Convert prediction to factor levels
+prediction_label <- tibble(max.col = max.col(pred)) %>%
+  mutate(pred = labels[max.col]) %>%
+  select(pred) %>%
+  unlist()
+
+# Create confusion matrix
+confusion_matrix <- table(test_data$Species, prediction_label)
+print(confusion_matrix)
+
+# Calculate accuracy
+check <- as.numeric(test_data$Species) == max.col(pred)
+accuracy <- (sum(check) / nrow(test_data)) * 100
+print(accuracy)
+
+# Train the neural network model(10,6)
+model <- neuralnet(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width,data = train_data, hidden = c(10, 6), linear.output = FALSE)
+
+plot(model, rep = 'best')
+
+# Model evaluation
+# Predict categories - test dataset
+pred <- predict(model, test_data[, -5])
+labels <- c("setosa", "versicolor", "virginica")
+
+# Convert prediction to factor levels
+prediction_label <- tibble(max.col = max.col(pred)) %>%
+  mutate(pred = labels[max.col]) %>%
+  select(pred) %>%
+  unlist()
+
+# Create confusion matrix
+confusion_matrix <- table(test_data$Species, prediction_label)
+print(confusion_matrix)
+
+# Calculate accuracy
+check <- as.numeric(test_data$Species) == max.col(pred)
+accuracy <- (sum(check) / nrow(test_data)) * 100
+print(accuracy)
+
+# Train the neural network model(112,50)
+model <- neuralnet(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width,data = train_data, hidden = c(112, 50), linear.output = FALSE)
+plot(model, rep = 'best')
+
+# Model evaluation
+# Predict categories - test dataset
+pred <- predict(model, test_data[, -5])
+labels <- c("setosa", "versicolor", "virginica")
+
+# Convert prediction to factor levels
+prediction_label <- tibble(max.col = max.col(pred)) %>%
+  mutate(pred = labels[max.col]) %>%
+  select(pred) %>%
+  unlist()
+
+# Create confusion matrix
+confusion_matrix <- table(test_data$Species, prediction_label)
+print(confusion_matrix)
+
+# Calculate accuracy
+check <- as.numeric(test_data$Species) == max.col(pred)
+accuracy <- (sum(check) / nrow(test_data)) * 100
+print(accuracy)
+
+# Train the neural network model(45,30)
+model <- neuralnet(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width,data = train_data, hidden = c(45, 30), linear.output = FALSE)
+
+plot(model, rep = 'best')
+
+# Model evaluation
+# Predict categories - test dataset
+pred <- predict(model, test_data[, -5])
+labels <- c("setosa", "versicolor", "virginica")
+
+# Convert prediction to factor levels
+prediction_label <- tibble(max.col = max.col(pred)) %>%
+  mutate(pred = labels[max.col]) %>%
+  select(pred) %>%
+  unlist()
+
+# Create confusion matrix
+confusion_matrix <- table(test_data$Species, prediction_label)
+print(confusion_matrix)
+
+# Calculate accuracy
+check <- as.numeric(test_data$Species) == max.col(pred)
+accuracy <- (sum(check) / nrow(test_data)) * 100
+print(accuracy)
+
